@@ -1,1 +1,1 @@
-<h5> this is sort of like a template now <q> I started doing this for the project ideas list and i couldn''t do it cuz i got bored and sleepy</q> <s>so fork it and enjoy</s> </h5>
+<embed>So Here it is   The basic one <s> OR should i say the most basic one</s> </embed>
