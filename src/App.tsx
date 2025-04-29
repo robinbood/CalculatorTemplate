@@ -1,52 +1,73 @@
 import { useState } from "react";
 import "./App.css";
 
+type Operand = '+' | '-' | '*' | '/' | null;
+
 function App() {
-  const [count, setCount] = useState<number[]>([]);
-  const [digit, setDigit] = useState<number>();
+  const [digit, setDigit] = useState<number[]>([]);
+  const [digit2, setDigit2] = useState<number[]>([]);
+  const [operator, setOperator] = useState<Operand>(null);
 
-  const first: number = count[0];
-  const second: number = count[1];
+  const first = Number(digit.join(""));
+  const second = Number(digit2.join(""));
 
-  const expression: Array<number> = new Array(1).fill([
-    count[0],
-    digit,
-    count[1],
-  ]);
-  const result = new Array(1).fill([first, digit, second]);
+  const calculateResult = () => {
+    switch(operator) {
+      case '+': return first + second;
+      case '-': return first - second;
+      case '*': return first * second;
+      case '/': return second !== 0 ? first / second : 'Error';
+      default: return first;
+    }
+  };
+
+  const push = (value: number) => {
+    if (operator) {
+      setDigit2([...digit2, value]);
+    } else {
+      setDigit([...digit, value]);
+    }
+  };
+
+  const handleOperator = (op: Operand) => {
+    const result = calculateResult()
+    setDigit(String(result).split('').map(Number))
+    setDigit2([])
+    setOperator(op);
+  };
+
+  const reset = () => {
+    setDigit([]);
+    setDigit2([]);
+    setOperator(null);
+  };
 
   return (
     <div>
-      <blockquote>{expression}</blockquote>
       <div>
-        {" "}
-        <h3>{result}</h3>
-        <h2>{count}</h2>
-      </div>
-
-      <div>
-        <button onChange={() => setCount([...count, 9])}>9</button>
-        <button>8</button>
-        <button>7</button>
-        <button>AC</button>
-        <button onChange={() => setDigit(9)}>+</button>
-        <button>+</button>
+        <h2>{digit.join("")} {operator} {digit2.join("")}</h2>
       </div>
       <div>
-        <button>6</button>
-        <button>5</button>
-        <button>4</button>
-        <button>AC</button>
-        <button>-</button>
-        <button></button>
+        <h3>{calculateResult()}</h3>
       </div>
       <div>
-        <button>3</button>
-        <button>2</button>
-        <button>1</button>
-        <button>0</button>
-        <button onChange={() =>setCount(0)}> RESET</button>
-        <button> = </button>
+        <button onClick={() => push(9)}>9</button>
+        <button onClick={() => push(8)}>8</button>
+        <button onClick={() => push(7)}>7</button>
+        <button onClick={() => handleOperator('+')}>+</button>
+        <button onClick={() => handleOperator('*')}>*</button>
+        
+      </div>
+      <div>
+        <button onClick={() => push(6)}>6</button>
+        <button onClick={() => push(5)}>5</button>
+        <button onClick={() => push(4)}>4</button>
+        <button onClick={() => handleOperator('-')}>-</button>
+        <button onClick={() => handleOperator('/')}>/</button>
+        <button onClick={() =>handleOperator}>=</button>
+        <button onClick={() => push(0)}>0</button>
+        <button onClick={reset}>RESET</button>
+        <button onClick={() => setOperator(null)}>=</button>
       </div>
     </div>
   );
