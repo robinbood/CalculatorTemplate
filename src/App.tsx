@@ -44,8 +44,11 @@ function App() {
   const reset = () => {
     setDigit([]);
     setDigit2([]);
+    setOperator(null)
     
   };
+
+  
 
   return (
     <div>
@@ -57,12 +60,16 @@ function App() {
       <div>
         <h3>{calculateResult()}</h3>
       </div>
+      
       <div>
         <button onClick={() => push(9)}>9</button>
         <button onClick={() => push(8)}>8</button>
         <button onClick={() => push(7)}>7</button>
         <button onClick={() => handleOperator("+")}>+</button>
         <button onClick={() => handleOperator("*")}>*</button>
+        <button onClick={() => push(3)}>3</button>
+        <button onClick={() => push(2)}>2</button>
+        <button onClick={() => push(1)}>1</button>
       </div>
       <div>
         <button onClick={() => push(6)}>6</button>
